@@ -2,12 +2,15 @@ import express from 'express';
 import pg from 'pg';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { swaggerUi, swaggerSpec } from "./swagger.js";
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 const pool = new pg.Pool({
   host: process.env.PGHOST,
@@ -21,6 +24,17 @@ const pool = new pg.Pool({
 app.get('/', (req, res) => {
   res.send('Backend is working');
 });
+
+/**
+ * @openapi
+ * /products:
+ *   get:
+ *     summary: Get all products
+ *     responses:
+ *       200:
+ *         description: Returns list of products
+ */
+
 
 // GET all products
 app.get('/products', async (req, res) => {
