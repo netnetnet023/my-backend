@@ -7,6 +7,7 @@ const options = {
     info: {
       title: "Product API",
       version: "1.0.0",
+      description: "API documentation for the Product Management System",
     },
   },
   apis: ["./server.js"],

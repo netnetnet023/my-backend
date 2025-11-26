@@ -9,8 +9,9 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// Swagger route (ONLY ONCE)
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const pool = new pg.Pool({
   host: process.env.PGHOST,
@@ -35,7 +36,6 @@ app.get('/', (req, res) => {
  *         description: Returns list of products
  */
 
-
 // GET all products
 app.get('/products', async (req, res) => {
   try {
@@ -51,7 +51,6 @@ app.get('/products', async (req, res) => {
 app.post('/products', async (req, res) => {
   const { name, price } = req.body;
 
-  // validation
   if (!name || typeof name !== "string") {
     return res.status(400).json({ error: "Invalid name" });
   }
@@ -121,13 +120,13 @@ app.delete('/products/:id', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
-});
-
-
+// Error handler
 app.use((err, req, res, next) => {
   console.error("Internal server error:", err);
   res.status(500).json({ error: "Something went wrong" });
+});
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
