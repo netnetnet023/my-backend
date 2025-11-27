@@ -10,7 +10,7 @@ const options = {
       description: "API documentation for the Product Management System",
     },
   },
-  apis: ["./server.js","./backend.js", "./routes/*.js"],
+  apis: ["./backend.js", "./routes/*.js"],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
