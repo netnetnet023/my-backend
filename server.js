@@ -30,6 +30,27 @@ app.get('/', (req, res) => {
   res.send('Backend is working');
 });
 
+/**
+ * @openapi
+ * /auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successfully registered
+ */
+
 // Register
 app.post("/auth/register", async (req, res) => {
   const { email, password } = req.body;
@@ -49,6 +70,28 @@ app.post("/auth/register", async (req, res) => {
     return res.status(500).json({ error: "Registration failed" });
   }
 });
+
+/**
+ * @openapi
+ * /auth/login:
+ *   post:
+ *     summary: Login and get a JWT token
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Returns JWT token
+ */
+
 
 // Login
 app.post("/auth/login", async (req, res) => {
